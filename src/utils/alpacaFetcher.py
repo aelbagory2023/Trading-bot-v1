@@ -1,5 +1,7 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
+import requests
+import os
 
 dotenv.config();
 
@@ -7,202 +9,172 @@ const ALPACA_API_URL = 'https://data.alpaca.markets/v1beta3/crypto';
 const ALPACA_API_KEY = process.env.ALPACA_API_KEY;
 const ALPACA_SECRET_KEY = process.env.ALPACA_SECRET_KEY;
 
-/**
- * Fetch historical bars for a list of crypto symbols between specified dates.
- * Endpoint: GET /v1beta3/crypto/{loc}/bars
- * 
- * @param {string} symbols - Comma-separated list of crypto symbols to fetch historical bars for.
- * @param {string} loc - The location (exchange) to fetch data from (e.g., 'binance').
- * @param {string} startDate - The start date for historical data in YYYY-MM-DD format.
- * @param {string} endDate - The end date for historical data in YYYY-MM-DD format.
- * @returns {Object|null} - Historical bars data or null in case of error.
- */
-async function fetchHistoricalBars(symbols, loc, startDate, endDate) {
-  try {
-    const response = await axios.get(`${ALPACA_API_URL}/${loc}/bars`, {
-      params: {
-        symbols: symbols,
-        start: startDate,
-        end: endDate,
-      },
-      headers: {
-        'alpaca_api_key': ALPACA_API_KEY,
-        'alpaca_secret_key': ALPACA_SECRET_KEY,
-      },
-    });
+def fetch_historical_bars(loc, symbols, timeframe='1Min', limit=1000, sort='asc'):
+    """Fetch historical bars for a list of crypto symbols."""
+    url = f"{ALPACA_API_URL}/{loc}/bars"
+    headers = {
+        "accept": "application/json",
+        "alpaca_api_key": ALPACA_API_KEY,
+        "alpaca_secret_key": ALPACA_SECRET_KEY,
+    }
+    params = {
+        'symbols': symbols,
+        'timeframe': timeframe,
+        'limit': limit,
+        'sort': sort
+    }
 
-    return response.data; // Return the historical bars data
-  } catch (error) {
-    console.error(`Error fetching historical bars: ${error.message}`);
-    return null; // Return null in case of error
-  }
-}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()  # Return the data from the response
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching historical bars: {e}")
+        return {"error": str(e)}
 
-/**
- * Fetch the latest bars for a list of crypto symbols.
- * Endpoint: GET /v1beta3/crypto/{loc}/latest/bars
- * 
- * @param {string} symbols - Comma-separated list of crypto symbols to fetch latest bars for.
- * @param {string} loc - The location (exchange) to fetch data from (e.g., 'binance').
- * @returns {Object|null} - Latest bars data or null in case of error.
- */
-async function fetchLatestBars(symbols, loc) {
-  try {
-    const response = await axios.get(`${ALPACA_API_URL}/${loc}/latest/bars`, {
-      params: {
-        symbols: symbols,
-      },
-      headers: {
-        'alpaca_api_key': ALPACA_API_KEY,
-        'alpaca_secret_key': ALPACA_SECRET_KEY,
-      },
-    });
+def fetch_latest_bars(loc, symbols):
+    """Fetch the latest bars for a list of crypto symbols."""
+    url = f"{ALPACA_API_URL}/{loc}/latest/bars"
+    headers = {
+        "accept": "application/json",
+        "alpaca_api_key": ALPACA_API_KEY,
+        "alpaca_secret_key": ALPACA_SECRET_KEY,
+    }
+    params = {
+        'symbols': symbols
+    }
 
-    return response.data; // Return the latest bars data
-  } catch (error) {
-    console.error(`Error fetching latest bars: ${error.message}`);
-    return null; // Return null in case of error
-  }
-}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()  # Return the data from the response
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching latest bars: {e}")
+        return {"error": str(e)}
 
-/**
- * Fetch the latest order book for a list of crypto symbols.
- * Endpoint: GET /v1beta3/crypto/{loc}/latest/orderbooks
- * 
- * @param {string} symbols - Comma-separated list of crypto symbols to fetch the latest order book for.
- * @param {string} loc - The location (exchange) to fetch data from (e.g., 'binance').
- * @returns {Object|null} - Latest order book data or null in case of error.
- */
-async function fetchLatestOrderBook(symbols, loc) {
-  try {
-    const response = await axios.get(`${ALPACA_API_URL}/${loc}/latest/orderbooks`, {
-      params: {
-        symbols: symbols,
-      },
-      headers: {
-        'alpaca_api_key': ALPACA_API_KEY,
-        'alpaca_secret_key': ALPACA_SECRET_KEY,
-      },
-    });
+def fetch_latest_order_book(loc, symbols):
+    """Fetch the latest order book for a list of crypto symbols."""
+    url = f"{ALPACA_API_URL}/{loc}/latest/orderbooks"
+    headers = {
+        "accept": "application/json",
+        "alpaca_api_key": ALPACA_API_KEY,
+        "alpaca_secret_key": ALPACA_SECRET_KEY,
+    }
+    params = {
+        'symbols': symbols
+    }
 
-    return response.data; // Return the latest order book data
-  } catch (error) {
-    console.error(`Error fetching latest order book: ${error.message}`);
-    return null; // Return null in case of error
-  }
-}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()  # Return the data from the response
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching latest order book: {e}")
+        return {"error": str(e)}
 
-/**
- * Fetch the latest quotes for a list of crypto symbols.
- * Endpoint: GET /v1beta3/crypto/{loc}/latest/quotes
- * 
- * @param {string} symbols - Comma-separated list of crypto symbols to fetch the latest quotes for.
- * @param {string} loc - The location (exchange) to fetch data from (e.g., 'binance').
- * @returns {Object|null} - Latest quotes data or null in case of error.
- */
-async function fetchLatestQuotes(symbols, loc) {
-  try {
-    const response = await axios.get(`${ALPACA_API_URL}/${loc}/latest/quotes`, {
-      params: {
-        symbols: symbols,
-      },
-      headers: {
-        'APCA_API_KEY_ID': ALPACA_API_KEY,
-        'APCA_API_SECRET_KEY': ALPACA_SECRET_KEY,
-      },
-    });
+def fetch_latest_quotes(loc, symbols):
+    """Fetch the latest quotes for a list of crypto symbols."""
+    url = f"{ALPACA_API_URL}/{loc}/latest/quotes"
+    headers = {
+        "accept": "application/json",
+        "alpaca_api_key": ALPACA_API_KEY,
+        "alpaca_secret_key": ALPACA_SECRET_KEY,
+    }
+    params = {
+        'symbols': symbols
+    }
 
-    return response.data; // Return the latest quotes data
-  } catch (error) {
-    console.error(`Error fetching latest quotes: ${error.message}`);
-    return null; // Return null in case of error
-  }
-}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()  # Return the data from the response
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching latest quotes: {e}")
+        return {"error": str(e)}
 
-/**
- * Fetch the latest trades for a list of crypto symbols.
- * Endpoint: GET /v1beta3/crypto/{loc}/latest/trades
- * 
- * @param {string} symbols - Comma-separated list of crypto symbols to fetch the latest trades for.
- * @param {string} loc - The location (exchange) to fetch data from (e.g., 'binance').
- * @returns {Object|null} - Latest trades data or null in case of error.
- */
-async function fetchLatestTrades(symbols, loc) {
-  try {
-    const response = await axios.get(`${ALPACA_API_URL}/${loc}/latest/trades`, {
-      params: {
-        symbols: symbols,
-      },
-      headers: {
-        'alpaca_api_key': ALPACA_API_KEY,
-        'alpaca_secret_key': ALPACA_SECRET_KEY,
-      },
-    });
+def fetch_latest_trades(loc, symbols):
+    """Fetch the latest trades for a list of crypto symbols."""
+    url = f"{ALPACA_API_URL}/{loc}/latest/trades"
+    headers = {
+        "accept": "application/json",
+        "alpaca_api_key": ALPACA_API_KEY,
+        "alpaca_secret_key": ALPACA_SECRET_KEY,
+    }
+    params = {
+        'symbols': symbols
+    }
 
-    return response.data; // Return the latest trades data
-  } catch (error) {
-    console.error(`Error fetching latest trades: ${error.message}`);
-    return null; // Return null in case of error
-  }
-}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()  # Return the data from the response
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching latest trades: {e}")
+        return {"error": str(e)}
 
-/**
- * Fetch historical quotes for a list of crypto symbols between specified dates.
- * Endpoint: GET /v1beta3/crypto/{loc}/quotes
- * 
- * @param {string} symbols - Comma-separated list of crypto symbols to fetch historical quotes for.
- * @param {string} loc - The location (exchange) to fetch data from (e.g., 'binance').
- * @param {string} startDate - The start date for historical data in YYYY-MM-DD format.
- * @param {string} endDate - The end date for historical data in YYYY-MM-DD format.
- * @returns {Object|null} - Historical quotes data or null in case of error.
- */
-async function fetchHistoricalQuotes(symbols, loc, startDate, endDate) {
-  try {
-    const response = await axios.get(`${ALPACA_API_URL}/${loc}/quotes`, {
-      params: {
-        symbols: symbols,
-        start: startDate,
-        end: endDate,
-      },
-      headers: {
-        'alpaca_api_key': ALPACA_API_KEY,
-        'alpaca_secret_key': ALPACA_SECRET_KEY,
-      },
-    });
+def fetch_historical_quotes(loc, symbols, start_date, end_date):
+    """Fetch historical quotes for a list of crypto symbols."""
+    url = f"{ALPACA_API_URL}/{loc}/quotes"
+    headers = {
+        "accept": "application/json",
+        "alpaca_api_key": ALPACA_API_KEY,
+        "alpaca_secret_key": ALPACA_SECRET_KEY,
+    }
+    params = {
+        'symbols': symbols,
+        'start': start_date,
+        'end': end_date
+    }
 
-    return response.data; // Return the historical quotes data
-  } catch (error) {
-    console.error(`Error fetching historical quotes: ${error.message}`);
-    return null; // Return null in case of error
-  }
-}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()  # Return the data from the response
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching historical quotes: {e}")
+        return {"error": str(e)}
 
-/**
- * Fetch snapshots for a list of crypto symbols.
- * Endpoint: GET /v1beta3/crypto/{loc}/snapshots
- * 
- * @param {string} symbols - Comma-separated list of crypto symbols to fetch snapshots for.
- * @param {string} loc - The location (exchange) to fetch data from (e.g., 'binance').
- * @returns {Object|null} - Snapshots data or null in case of error.
- */
-async function fetchSnapshots(symbols, loc) {
-  try {
-    const response = await axios.get(`${ALPACA_API_URL}/${loc}/snapshots`, {
-      params: {
-        symbols: symbols,
-      },
-      headers: {
-        'alpaca_api_key': ALPACA_API_KEY,
-        'alpaca_secret_key': ALPACA_SECRET_KEY,
-      },
-    });
+def fetch_snapshots(loc, symbols):
+    """Fetch snapshots for a list of crypto symbols."""
+    url = f"{ALPACA_API_URL}/{loc}/snapshots"
+    headers = {
+        "accept": "application/json",
+        "alpaca_api_key": ALPACA_API_KEY,
+        "alpaca_secret_key": ALPACA_SECRET_KEY,
+    }
+    params = {
+        'symbols': symbols
+    }
 
-    return response.data; // Return the snapshots data
-  } catch (error) {
-    console.error(`Error fetching snapshots: ${error.message}`);
-    return null; // Return null in case of error
-  }
-}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()  # Return the data from the response
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching snapshots: {e}")
+        return {"error": str(e)}
+
+def fetch_historical_trades(loc, symbols, start_date, end_date):
+    """Fetch historical trades for a list of crypto symbols."""
+    url = f"{ALPACA_API_URL}/{loc}/trades"
+    headers = {
+        "accept": "application/json",
+        "alpaca_api_key": ALPACA_API_KEY,
+        "alpaca_secret_key": ALPACA_SECRET_KEY,
+    }
+    params = {
+        'symbols': symbols,
+        'start': start_date,
+        'end': end_date
+    }
+
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()  # Return the data from the response
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching historical trades: {e}")
+        return {"error": str(e)}
 
 export { 
   fetchHistoricalBars, 
@@ -211,5 +183,6 @@ export {
   fetchLatestQuotes, 
   fetchLatestTrades, 
   fetchHistoricalQuotes, 
-  fetchSnapshots 
+  fetchSnapshots, 
+  fetchHistoricalTrades 
 };
