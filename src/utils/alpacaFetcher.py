@@ -26,8 +26,8 @@ async function fetchHistoricalBars(symbols, loc, startDate, endDate) {
         end: endDate,
       },
       headers: {
-        'APCA_API_KEY_ID': ALPACA_API_KEY,
-        'APCA_API_SECRET_KEY': ALPACA_SECRET_KEY,
+        'alpaca_api_key': ALPACA_API_KEY,
+        'alpaca_secret_key': ALPACA_SECRET_KEY,
       },
     });
 
@@ -53,8 +53,8 @@ async function fetchLatestBars(symbols, loc) {
         symbols: symbols,
       },
       headers: {
-        'APCA_API_KEY_ID': ALPACA_API_KEY,
-        'APCA_API_SECRET_KEY': ALPACA_SECRET_KEY,
+        'alpaca_api_key': ALPACA_API_KEY,
+        'alpaca_secret_key': ALPACA_SECRET_KEY,
       },
     });
 
@@ -80,8 +80,8 @@ async function fetchLatestOrderBook(symbols, loc) {
         symbols: symbols,
       },
       headers: {
-        'APCA_API_KEY_ID': ALPACA_API_KEY,
-        'APCA_API_SECRET_KEY': ALPACA_SECRET_KEY,
+        'alpaca_api_key': ALPACA_API_KEY,
+        'alpaca_secret_key': ALPACA_SECRET_KEY,
       },
     });
 
@@ -134,8 +134,8 @@ async function fetchLatestTrades(symbols, loc) {
         symbols: symbols,
       },
       headers: {
-        'APCA_API_KEY_ID': ALPACA_API_KEY,
-        'APCA_API_SECRET_KEY': ALPACA_SECRET_KEY,
+        'alpaca_api_key': ALPACA_API_KEY,
+        'alpaca_secret_key': ALPACA_SECRET_KEY,
       },
     });
 
@@ -165,8 +165,8 @@ async function fetchHistoricalQuotes(symbols, loc, startDate, endDate) {
         end: endDate,
       },
       headers: {
-        'APCA_API_KEY_ID': ALPACA_API_KEY,
-        'APCA_API_SECRET_KEY': ALPACA_SECRET_KEY,
+        'alpaca_api_key': ALPACA_API_KEY,
+        'alpaca_secret_key': ALPACA_SECRET_KEY,
       },
     });
 
@@ -192,8 +192,8 @@ async function fetchSnapshots(symbols, loc) {
         symbols: symbols,
       },
       headers: {
-        'APCA_API_KEY_ID': ALPACA_API_KEY,
-        'APCA_API_SECRET_KEY': ALPACA_SECRET_KEY,
+        'alpaca_api_key': ALPACA_API_KEY,
+        'alpaca_secret_key': ALPACA_SECRET_KEY,
       },
     });
 
