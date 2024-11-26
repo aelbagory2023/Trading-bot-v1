@@ -1,2 +1,7 @@
-Flask
+alpaca-py
+yfinance
 requests
+quantstats
+pandas-datareader
+pandas=1.4.4
+matplotlib

@@ -3,19 +3,24 @@ import dotenv from 'dotenv';
 import requests
 import os
 
-dotenv.config();
+load_dotenv()
 
-const ALPACA_API_URL = 'https://data.alpaca.markets/v1beta3/crypto';
-const ALPACA_API_KEY = process.env.ALPACA_API_KEY;
-const ALPACA_SECRET_KEY = process.env.ALPACA_SECRET_KEY;
+
+ALPACA_API_URL = 'https://data.alpaca.markets/v1beta3/crypto';
+ALPACA_API_KEY = ALPACA_CONFIG['API_KEY']
+ALPACA_SECRET_KEY = ALPACA_CONFIG['API_SECRET']
+
+print(ALPACA_API_KEY)
+print(ALPACA_SECRET_KEY)
+
 
 def fetch_historical_bars(loc, symbols, timeframe='1Min', limit=1000, sort='asc'):
     """Fetch historical bars for a list of crypto symbols."""
     url = f"{ALPACA_API_URL}/{loc}/bars"
     headers = {
         "accept": "application/json",
-        "alpaca_api_key": ALPACA_API_KEY,
-        "alpaca_secret_key": ALPACA_SECRET_KEY,
+        "APCA-API-KEY-ID": ALPACA_API_KEY,
+        "APCA-API-SECRET-KEY": ALPACA_SECRET_KEY,
     }
     params = {
         'symbols': symbols,
@@ -37,8 +42,8 @@ def fetch_latest_bars(loc, symbols):
     url = f"{ALPACA_API_URL}/{loc}/latest/bars"
     headers = {
         "accept": "application/json",
-        "alpaca_api_key": ALPACA_API_KEY,
-        "alpaca_secret_key": ALPACA_SECRET_KEY,
+        "APCA-API-KEY-ID": ALPACA_API_KEY,
+        "APCA-API-SECRET-KEY": ALPACA_SECRET_KEY,
     }
     params = {
         'symbols': symbols
@@ -57,8 +62,8 @@ def fetch_latest_order_book(loc, symbols):
     url = f"{ALPACA_API_URL}/{loc}/latest/orderbooks"
     headers = {
         "accept": "application/json",
-        "alpaca_api_key": ALPACA_API_KEY,
-        "alpaca_secret_key": ALPACA_SECRET_KEY,
+        "APCA-API-KEY-ID": ALPACA_API_KEY,
+        "APCA-API-SECRET-KEY": ALPACA_SECRET_KEY,
     }
     params = {
         'symbols': symbols
@@ -77,8 +82,8 @@ def fetch_latest_quotes(loc, symbols):
     url = f"{ALPACA_API_URL}/{loc}/latest/quotes"
     headers = {
         "accept": "application/json",
-        "alpaca_api_key": ALPACA_API_KEY,
-        "alpaca_secret_key": ALPACA_SECRET_KEY,
+            "APCA-API-KEY-ID": ALPACA_API_KEY,
+            "APCA-API-SECRET-KEY": ALPACA_SECRET_KEY,
     }
     params = {
         'symbols': symbols
@@ -97,8 +102,8 @@ def fetch_latest_trades(loc, symbols):
     url = f"{ALPACA_API_URL}/{loc}/latest/trades"
     headers = {
         "accept": "application/json",
-        "alpaca_api_key": ALPACA_API_KEY,
-        "alpaca_secret_key": ALPACA_SECRET_KEY,
+        "APCA-API-KEY-ID": ALPACA_API_KEY,
+        "APCA-API-SECRET-KEY": ALPACA_SECRET_KEY,
     }
     params = {
         'symbols': symbols
@@ -117,8 +122,8 @@ def fetch_historical_quotes(loc, symbols, start_date, end_date):
     url = f"{ALPACA_API_URL}/{loc}/quotes"
     headers = {
         "accept": "application/json",
-        "alpaca_api_key": ALPACA_API_KEY,
-        "alpaca_secret_key": ALPACA_SECRET_KEY,
+        "APCA-API-KEY-ID": ALPACA_API_KEY,
+        "APCA-API-SECRET-KEY": ALPACA_SECRET_KEY,
     }
     params = {
         'symbols': symbols,
@@ -139,8 +144,8 @@ def fetch_snapshots(loc, symbols):
     url = f"{ALPACA_API_URL}/{loc}/snapshots"
     headers = {
         "accept": "application/json",
-        "alpaca_api_key": ALPACA_API_KEY,
-        "alpaca_secret_key": ALPACA_SECRET_KEY,
+        "APCA-API-KEY-ID": ALPACA_API_KEY,
+        "APCA-API-SECRET-KEY": ALPACA_SECRET_KEY,
     }
     params = {
         'symbols': symbols
@@ -159,8 +164,8 @@ def fetch_historical_trades(loc, symbols, start_date, end_date):
     url = f"{ALPACA_API_URL}/{loc}/trades"
     headers = {
         "accept": "application/json",
-        "alpaca_api_key": ALPACA_API_KEY,
-        "alpaca_secret_key": ALPACA_SECRET_KEY,
+        "APCA-API-KEY-ID": ALPACA_API_KEY,
+        "APCA-API-SECRET-KEY": ALPACA_SECRET_KEY,
     }
     params = {
         'symbols': symbols,
