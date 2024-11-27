@@ -3,8 +3,8 @@ import os
 
 
 ALPACA_CONFIG = {
-    "API_KEY": "PKJ5FOW0TUSM4WPVB9AA",
-    "API_SECRET": "igkVdpQQqbcPYhmq9B0Y9kaUCsUu9zvYufiUAvUM",
-    "BASE_URL": "https://paper-api.alpaca.markets"
+    "API_KEY": "PKSUTZRALXCZYNZ55ZWM",
+    "API_SECRET": "nIWsePiSKXMivfLdeOQiXCp1CAscp9G8Z1VIUI0E",
+    "BASE_URL": "https://paper-api.alpaca.markets/v2"
 }
 
