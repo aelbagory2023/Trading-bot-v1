@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 
 client = TradingClient(ALPACA_CONFIG['API_KEY'], ALPACA_CONFIG['API_SECRET'], paper=True)
 
+ALPACA_API_URL = "https://paper-api.alpaca.markets/v2"
+
 class MomentumTrading(Strategy):
     def initialize(self):
         self.sleeptime = "1D"
@@ -42,16 +44,15 @@ class MomentumTrading(Strategy):
                     self.set_take_profit(symbol, price)
 
     def fetch_latest_bars(self, symbol):
-        url = f"https://data.alpaca.markets/v1beta3/crypto/latest/bars?symbols={symbol}"
+        url = f"https://data.alpaca.markets/v1beta3/crypto/us/latest/bars?symbols=BONK/USD"
         
         headers = {
             "accept": "application/json",
-            "APCA-API-KEY-ID": ALPACA_CONFIG['API_KEY'],
-            "APCA-API-SECRET-KEY": ALPACA_CONFIG['API_SECRET']
+           
         }
 
         response = requests.get(url, headers=headers)
-        
+
         if response.status_code == 200:
             return response.json()[symbol]
         else:
